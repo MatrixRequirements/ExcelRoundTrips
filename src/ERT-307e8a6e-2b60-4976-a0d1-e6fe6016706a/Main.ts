@@ -1,5 +1,6 @@
 
 import{ PluginCore,IPluginConfig} from "./core/PluginCore"
+import { IProjectSettings } from "./Interfaces";
 /** This class is allows you to configure the features of your plugin.
  * 
  *  You can also implement functions to into the plugin (at start in the constructor, when loading a project, when loading an item)
@@ -7,6 +8,7 @@ import{ PluginCore,IPluginConfig} from "./core/PluginCore"
      */
 export class Plugin extends PluginCore {
 
+    
     /**This part enables which 
      * 
      * See IPluginConfig interface for explanation of parameters
@@ -20,7 +22,7 @@ export class Plugin extends PluginCore {
             id: "ERTCustomerSettings",
             title: "ERT customer settings page",
             type: "ERTcs",
-            enabled: true,
+            enabled: false,
             defaultSettings: {
                 myServerSetting: "default value for setting defined in Interfaces.ts",
             },
@@ -37,7 +39,7 @@ export class Plugin extends PluginCore {
             type:"ERTps",
             enabled: true,
             defaultSettings: {
-                myProjectSetting:  "default value for setting defined in Interfaces.ts",
+                rules:[]
             },
             settingName: "ERT_settings",
             help: "This is my help text",
@@ -48,13 +50,13 @@ export class Plugin extends PluginCore {
         */
         menuToolItem: {
             enabled: true,
-            title:"excelroundtrips-menuitem",
+            title:"Sync From Excel",
         },
         /*  Add a custom field to enter some data in the UI - set enabled to false if not needed.
             The field itself is implemented in the _Control.ts 
         */
         field: {
-            enabled: true,
+            enabled: false,
             fieldType: "excelroundtrips",
             title: "excelroundtrips-field",
             fieldConfigOptions: {
@@ -79,7 +81,7 @@ export class Plugin extends PluginCore {
             
             id:"ERT",
             title: "ERT dashboard page",
-            enabled: true,
+            enabled: false,
             icon: "fal fa-cog",
             parent: "DASHBOARDS",
             usefilter: true,
@@ -121,8 +123,10 @@ export class Plugin extends PluginCore {
         
         // here is a good place to decide based on the selection in the tree, whether the plugin should be enabled 
         
-        // if not:
-        // this.enabledInContext = false;
+        let projectConfig = <IProjectSettings>IC.getSettingJSON( Plugin.config.projectSettingsPage.settingName, {});
+        if ( !projectConfig.rules || projectConfig.rules.filter( rule => rule.category == item.type ).length == 0) {
+            this.enabledInContext = false;
+        }
     }
 }
 

@@ -15,7 +15,28 @@ import { Plugin } from "./Main";
             
             return $(`
                 <div class="panel-body-v-scroll fillHeight">
-                    <div>This is my content : ${settings.myProjectSetting}</div>
+                    <div>sorry no UI yet - the syntax is as follows:</div> 
+                    <pre>
+export interface IProjectSettings {
+    /** a list of import/sync rules */
+    rules:IProjectSettingMapping[]; 
+}
+
+export interface IProjectSettingMapping {
+    /**  each category can have a different rule, so this specifies the category for the rule below */
+    category:string; 
+    /** excel column name which has the unique ID (A,B, ...).  */
+    uidColumn:string;
+    /** excel column name which has the title (A,B, ...).  */
+    titleColumn:string;
+    /** how many rows to exclude from excel (normally should be at least to exclude a header row) */
+    excludeUpTo:Number;
+    /** maps a column to a field (or property of risk ), e.g. {"A":"legacy id", "B":"Description", "AE":"Risk.harm"} */
+    columnToFieldMap:IStringMap 
+    /** maps a column to a label id */
+    columnToLabelMap:IStringMap 
+}
+                    </pre>
                     <div id="controls"></div>
                 </div>
                 `);
@@ -71,7 +92,7 @@ import { Plugin } from "./Main";
             self.settingsOriginal = self.settings();
             self.settingsChanged = { ...self.settingsOriginal };
             let dom = self.getSettingsDOM(self.settingsChanged);
-            ml.UI.addTextInput($("#controls",dom), "My Project setting", self.settingsChanged, "myProjectSetting",self.paramChanged);
+            // ml.UI.addTextInput($("#controls",dom), "My Project setting", self.settingsChanged, "myProjectSetting",self.paramChanged);
             app.itemForm.append(dom);
         };
 
