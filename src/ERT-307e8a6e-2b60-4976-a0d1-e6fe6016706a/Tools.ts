@@ -589,7 +589,7 @@ export class Tool {
             parent: current,
             type: category,
             isItem: true,
-            changed: function () {}});
+            changed: function () { /* empty on purpose */}});
         let postWeights:IRiskValueFactorWeight[];
         
         $.each( this.columns, function( colIdx, column ) {
@@ -632,7 +632,7 @@ export class Tool {
         if (riskField) {
             let riskVal:IRiskValue = <IRiskValue>JSON.parse(newItem.getControlByName(riskControlName).getController().getValue());
             if (postWeights) riskVal.postWeights = postWeights;
-            (<any>item)[riskField] = JSON.stringify(riskVal);
+            (<IStringMap>item)[riskField] = JSON.stringify(riskVal);
         }
 
         let folder = current;
