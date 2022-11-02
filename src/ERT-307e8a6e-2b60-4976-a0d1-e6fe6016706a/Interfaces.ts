@@ -33,7 +33,7 @@ export interface IProjectSettingMapping {
     /** excel column name which has the title (A,B, ...).  */
     titleColumn:string;
     /** how many rows to exclude from excel (normally should be at least to exclude a header row) */
-    excludeUpTo:Number;
+    excludeUpTo:number;
     /** maps a column to a field (or property of risk ), e.g. {"A":"legacy id", "B":"Description", "AE":"Risk.harm"} */
     columnToFieldMap:IStringMap 
     /** maps a column to a label id */

@@ -65,9 +65,7 @@ export class Tool {
         [{
             text: 'Next',
             class: 'btnDoIt',
-            click: function () {
-                
-            }
+            click:  () => { /* nothing to do */}
             }], 1, true, true, () => { that.dlg.remove(); }, () => { that.wizardStepPrepare(ui, $(".btnDoIt", that.dlg.parent())); }, () => { }
         );    
     }
@@ -78,7 +76,7 @@ export class Tool {
 
     // import excel one WS at a time mapping column to fields
     private wizardStepPrepare( ui:JQuery, next:JQuery ) {
-        let that = this;
+        
         ui.html("<h1>Step 1: Prepare the excel</h1>");
         let ol = $("<ol>").appendTo(ui);
         $("<li>Unmerge all cells in all worksheets</li>").appendTo(ol);
@@ -108,7 +106,7 @@ export class Tool {
             canEdit: true,
             help: " ",
             fieldValue: "[]",
-            valueChanged: function() {},
+            valueChanged: function() { /* nothing to do */ },
             processExternally: function(files:FileList) {
                 ml.File.convertXLSXAsync( files[0]).done(function(text:string) {
                 
@@ -610,11 +608,11 @@ export class Tool {
                     (<RiskControlImpl>newItem.getControlByName( riskControlName ).getController()).riskChange();
                 }
             } else  if (column.fieldType=="richtext") {
-                (<any>item)[column.fieldId] = cell.replace(/\n/g, "<br>");
+                (<IStringMap>item)[column.fieldId] = cell.replace(/\n/g, "<br>");
             } else  if (  that.jsonFields.indexOf( column.fieldType) !=-1 ) { 
-                (<any>item)[column.fieldId] = cell;
+                (<IStringMap>item)[column.fieldId] = cell;
             } else  if (column.fieldType=="checkbox") {
-                (<any>item)[column.fieldId] =cell.toLowerCase() == "x" ||  cell.toLowerCase() == "true" || cell == "1";
+                (<IBooleanMap>item)[column.fieldId] =cell.toLowerCase() == "x" ||  cell.toLowerCase() == "true" || cell == "1";
             } else  if (column.fieldType=="dropdown") {
                 that.makeDropdown(category, column, rowIdx, cell, item);
             } else  if (column.fieldType=="test_steps" || column.fieldType=="test_steps_result" || column.fieldType=="steplist") {
@@ -766,7 +764,7 @@ export class Tool {
             data.push(jsonRow);
         });
 
-        (<any>item)[column.fieldId] = JSON.stringify(data);
+        (<IStringMap>item)[column.fieldId] = JSON.stringify(data);
     }
     private makeDropdown(category: string, column: IImportColumn, rowIdx: number, cell: string, item: IItemPut) {
         let that = this;
@@ -805,7 +803,7 @@ export class Tool {
                     }
                 });
                 
-                (<any>item)[column.fieldId] = mapped.length?mapped.join():"";
+                (<IStringMap>item)[column.fieldId] = mapped.length?mapped.join():"";
             }
         }
     }
@@ -890,7 +888,7 @@ export class Tool {
     /** Excel: A,B,C -> index 0,1,2 */
     protected getColumnIndexFromExcelColumn( column:string):number {
         let columnPos = 0;
-        for(var p = 0; p < column.length; p++){
+        for(let p = 0; p < column.length; p++){
             columnPos = column.charCodeAt(p) - 64 + columnPos * 26;
         }
         return columnPos-1;
