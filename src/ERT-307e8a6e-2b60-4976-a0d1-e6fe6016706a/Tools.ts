@@ -706,11 +706,7 @@ export class Tool {
                 labelChanges.push( label ); // add the label
             } 
         }
-        if (labelChanges.length) {
-            update.labels = labelChanges.join(",");
-        }
-        
-
+       
         // check fields
         let fields = Object.keys( newVersion ).filter( key => key != "title" && key != "labels");
         for( let field of fields) {
@@ -724,6 +720,13 @@ export class Tool {
         that.showUpdatedItem( rowIdx, serverVersion.itemOrFolderRef, changed?"CHANGED":"SAME");
         if (changed) {
 
+            if (that.projectSettingMapping.dirtyLabel) {
+                // mark as dirty
+                labelChanges.push(that.projectSettingMapping.dirtyLabel);
+            }
+            if (labelChanges.length) {
+                update.labels = labelChanges.join(",");
+            }
             app.updateItemInDBAsync(update, "import" ).done( function (updatedItem) {
                 res.resolve();
             }).fail( () => {
