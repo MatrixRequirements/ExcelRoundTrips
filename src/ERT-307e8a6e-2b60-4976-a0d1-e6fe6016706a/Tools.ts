@@ -660,7 +660,7 @@ export class Tool {
                     // the risk existed before
                     let oldRisk = JSON.parse( oldRisks[0].value );
                     newRisk.mitigations = oldRisk.mitigations; // these cannot be imported anyway
-                    if (newRisk.postWeights && newRisk.postWeights) {
+                    if (newRisk.postWeights && oldRisk.postWeights) {
                         for (let newPW of newRisk.postWeights ) {
                             let oldPWs = oldRisk.postWeights.filter( pw => pw.type == newPW.type && pw.value == newPW.value);
                             if (oldPWs.length==1) {
@@ -739,7 +739,7 @@ export class Tool {
         let fields = Object.keys( newVersion ).filter( key => key != "title" && key != "labels");
         for( let field of fields) {
             let exists = serverVersion.fieldVal.filter( fv => fv.id +"" == field && fv.value == newVersion[field]).length != 0;
-            if (!exists) {
+            if (!exists && newVersion[field]) {
                 changed = true;
                 update["fx"+field] = newVersion[field];
             }
