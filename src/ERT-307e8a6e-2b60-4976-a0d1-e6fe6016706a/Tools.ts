@@ -669,6 +669,7 @@ export class Tool {
                         }
                     }
                 }
+                item[riskField] = JSON.stringify(newRisk);
 
             }
 
