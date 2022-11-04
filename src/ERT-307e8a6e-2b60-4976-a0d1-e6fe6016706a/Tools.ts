@@ -626,6 +626,9 @@ export class Tool {
             }
         });
 
+        if (that.projectSettingMapping.dirtyLabel) {
+            labels.push(that.projectSettingMapping.dirtyLabel);
+        }
         if (labels.length) {
             item.labels = labels.join(",");
         }
