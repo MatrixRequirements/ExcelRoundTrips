@@ -142,7 +142,7 @@ export class Tool {
         let worksheets = $("Worksheet", this.xml);
         let ws:IDropdownOption[] = [];
         $.each(worksheets, function( idx, worksheet){
-            ws.push({id:idx, label:$(worksheet).attr("ss:Name")});
+            ws.push({id:""+idx, label:$(worksheet).attr("ss:Name")});
         });
         
         select.mxDropdown({
@@ -313,14 +313,15 @@ export class Tool {
             that.columns = [];
             $.each( $( "select option:selected", thead ), function( selIdx, selected) {
                 if ( $(selected).text() ) {
-                    that.columns.push({isLabel: $(selected).data("islabel")=="1", id:$(selected).val(), label:$(selected).text(), index:$(selected).data("index") });
+                    that.columns.push({isLabel: $(selected).data("islabel")=="1", id:<string>$(selected).val(), label:$(selected).text(), index:$(selected).data("index") });
                 }
             });
             ml.UI.setEnabled(next,that.columns.length !=0);
         };
         // react on UI changes
-        $("select", thead).change( function( event:JQueryEventObject) {
+        $("select", thead).on("change", ( event:JQueryEventObject) => {
             evalSelection();
+            return null;
         });
         ml.UI.setEnabled(next,false);
         // do it once after drawing
@@ -774,7 +775,7 @@ export class Tool {
             });
         } else if ( fieldConfig.fieldType == "steplist") {
             $.each(fieldConfig.parameterJson.columns, function(cidx, columnDef) {
-                columnNames[cidx+1] = columnDef.field;
+                columnNames[(<number>cidx)+1] = columnDef.field;
             });
         } 
 
