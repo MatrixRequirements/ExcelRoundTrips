@@ -11,8 +11,8 @@
     "check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --ext .ts",
-    "parcel": "parcel watch src/ERT-307e8a6e-2b60-4976-a0d1-e6fe6016706a/Main.ts --public-url /static/js/ --out-dir C:\\git\\matrix-client-server\\server\\Clouds\\docker\\data\\home\\clouds\\custom\\js --no-hmr",
-    "parcel-dist": "parcel build src/ERT-307e8a6e-2b60-4976-a0d1-e6fe6016706a/Main.ts --public-url /static/js/ --out-dir ./dist"
+    "parcel": "parcel src/ERT-307e8a6e-2b60-4976-a0d1-e6fe6016706a/Main.ts --dist-dir C:\\git\\matrix-client-server\\server\\Clouds\\docker\\data\\home\\clouds\\custom\\js --no-hmr",
+    "parcel-dist": "parcel build src/ERT-307e8a6e-2b60-4976-a0d1-e6fe6016706a/Main.ts --no-optimize"
   },
   "author": "",
   "license": "ISC",
@@ -24,7 +24,7 @@
     "eslint": "^8.11.0",
     "prettier": "^2.2.1",
     "typescript": "^4.1.5",
-    "parcel-bundler": "^1.12.4"
+    "parcel": "^2.7.0"
   },
   "dependencies": {}
 }

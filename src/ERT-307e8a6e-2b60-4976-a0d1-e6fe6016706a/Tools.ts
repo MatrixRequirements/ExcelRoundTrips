@@ -634,6 +634,7 @@ export class Tool {
         }
         if (riskField) {
             let riskVal:IRiskValue = <IRiskValue>JSON.parse(newItem.getControlByName(riskControlName).getController().getValue());
+
             if (postWeights) riskVal.postWeights = postWeights;
             (<IStringMap>item)[riskField] = JSON.stringify(riskVal);
         }
@@ -648,6 +649,28 @@ export class Tool {
         let uid = (uidIndex >=0 && row.cells[uidIndex])?row.cells[uidIndex]:"";
         if (uid && uidMap[uid]) {
             // this is actually an update
+
+
+            // fix risk controls and mitigations
+            if (riskField) {
+                let newRisk = JSON.parse(item[riskField]);
+                let oldRisks = uidMap[uid].fieldVal.filter( fv => fv.id==riskField );
+                if (oldRisks.length) {
+                    // the risk existed before
+                    let oldRisk = JSON.parse( oldRisks[0].value );
+                    newRisk.mitigations = oldRisk.mitigations; // these cannot be imported anyway
+                    if (newRisk.postWeights && newRisk.postWeights) {
+                        for (let newPW of newRisk.postWeights ) {
+                            let oldPWs = oldRisk.postWeights.filter( pw => pw.type == newPW.type && pw.value == newPW.value);
+                            if (oldPWs.length==1) {
+                                newPW.description = oldPWs[0].description;
+                            }
+                        }
+                    }
+                }
+
+            }
+
             that.updateIfNeeded( rowIdx, uidMap[uid], category, item).done( () => {
                 that.importUpdateAllRows ( category, root, current, rowIdx+1, uidMap, uidFieldName).done( function() {
                     res.resolve();
