@@ -94,7 +94,7 @@ export interface IProjectSettingMapping {
             self.settingsOriginal = self.settings();
             self.settingsChanged = { ...self.settingsOriginal };
             let dom = self.getSettingsDOM(self.settingsChanged);
-             pp.itemForm.append(dom);
+            app.itemForm.append(dom);
         };
 
         self.paramChanged = () => {
