@@ -14,7 +14,7 @@ export class DashboardPage {
         return $(`
     <div class="panel-body-v-scroll fillHeight"> 
         <div class="panel-body">
-            This is my content : ${this.settings.myProjectSetting}
+            This is my dashboard
         </div>
     </div>
     `);
@@ -26,7 +26,7 @@ export class DashboardPage {
         const control = this.getDashboardDOM();
         app.itemForm.append(
             ml.UI.getPageTitle(
-                this.settings.myProjectSetting,
+                "dashbaord",
                 () => {
                     return control;
                 },
