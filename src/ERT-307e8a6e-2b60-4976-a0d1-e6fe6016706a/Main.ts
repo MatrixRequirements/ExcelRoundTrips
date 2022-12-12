@@ -115,7 +115,8 @@ export class Plugin extends PluginCore {
     }
 
     /** this method is called just before the rendering of an item is done
-    * It is also called when opening the create item dialog.
+    * It is also called when opening the create item dialog. 
+    * 
     * 
     * @param _item: the item which is being loaded in the UI 
     */
