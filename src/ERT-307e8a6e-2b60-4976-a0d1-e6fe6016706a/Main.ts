@@ -126,7 +126,9 @@ export class Plugin extends PluginCore {
         let projectConfig = <IProjectSettings>IC.getSettingJSON( Plugin.config.projectSettingsPage.settingName, {});
         if ( !projectConfig.rules || projectConfig.rules.filter( rule => rule.category == item.type ).length == 0) {
             this.enabledInContext = false;
-        }
+        } else {
+            this.enabledInContext = true;
+        } 
     }
 }
 
